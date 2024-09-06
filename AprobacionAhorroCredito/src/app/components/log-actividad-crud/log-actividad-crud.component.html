@@ -1,0 +1,81 @@
+<div class="max-w-7xl mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6">Gestión de Logs de Actividad</h2>
+  
+    <!-- Formulario para crear/editar log -->
+    <form (ngSubmit)="guardarLog()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      
+      <!-- Campo Fecha de Actividad -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Fecha de Actividad:</label>
+        <input [(ngModel)]="log.fechaActividad" name="fechaActividad" required type="datetime-local" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Campo Tipo de Actividad -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Actividad:</label>
+        <input [(ngModel)]="log.tipoActividad" name="tipoActividad" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Selector de Usuario -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
+        <select [(ngModel)]="log.usuario.idUsuario" name="idUsuario" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option *ngFor="let usuario of usuarios" [value]="usuario.idUsuario">{{ usuario.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Selector de Analista -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Analista:</label>
+        <select [(ngModel)]="log.analista.idAnalista" name="idAnalista" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option *ngFor="let analista of analistas" [value]="analista.idAnalista">{{ analista.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Campo Descripción -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Descripción:</label>
+        <textarea [(ngModel)]="log.descripcion" name="descripcion" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+      </div>
+  
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          {{ editMode ? 'Actualizar Log' : 'Crear Log' }}
+        </button>
+        <button type="button" (click)="resetForm()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla para listar logs -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="w-1/5 py-2">Fecha de Actividad</th>
+            <th class="w-1/5 py-2">Tipo de Actividad</th>
+            <th class="w-1/5 py-2">Usuario</th>
+            <th class="w-1/5 py-2">Analista</th>
+            <th class="w-1/5 py-2">Descripción</th>
+            <th class="w-1/5 py-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let log of logs" class="bg-gray-100 border-b">
+                <td class="py-2 px-4">{{ log.fechaActividad }}</td>
+                <td class="py-2 px-4">{{ log.tipoActividad }}</td>
+                <td class="py-2 px-4">{{ log.usuario.nombre }}</td>
+                <td class="py-2 px-4">{{ log.analista.nombre }}</td>
+                <td class="py-2 px-4">{{ log.descripcion }}</td>
+                <td class="py-2 px-4 flex space-x-4">
+                  <button (click)="cargarLog(log)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                    Editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      

@@ -1,0 +1,63 @@
+<div class="max-w-7xl mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6">Gestión de Documentos</h2>
+  
+    <!-- Formulario para crear/editar documento -->
+    <form (ngSubmit)="guardarDocumento()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      
+      <!-- Campo Tipo de Documento -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Documento:</label>
+        <input [(ngModel)]="documento.tipoDocumento" name="tipoDocumento" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Campo URL del Documento -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">URL del Documento:</label>
+        <input [(ngModel)]="documento.urlDocumento" name="urlDocumento" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Selector de Solicitud -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Solicitud de Crédito:</label>
+        <select [(ngModel)]="documento.solicitudCredito.idSolicitud" name="idSolicitud" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option *ngFor="let solicitud of solicitudes" [value]="solicitud.idSolicitud">{{ solicitud.montoSolicitado }}</option>
+        </select>
+      </div>
+  
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          {{ editMode ? 'Actualizar Documento' : 'Crear Documento' }}
+        </button>
+        <button type="button" (click)="resetForm()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla para listar documentos -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="w-1/4 py-2">Tipo de Documento</th>
+            <th class="w-1/4 py-2">URL del Documento</th>
+            <th class="w-1/4 py-2">Solicitud de Crédito</th>
+            <th class="w-1/4 py-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let documento of documentos" class="bg-gray-100 border-b">
+            <td class="py-2 px-4">{{ documento.tipoDocumento }}</td>
+            <td class="py-2 px-4">{{ documento.urlDocumento }}</td>
+            <td class="py-2 px-4">{{ documento.solicitudCredito.montoSolicitado }}</td>
+            <td class="py-2 px-4 flex space-x-4">
+              <button (click)="cargarDocumento(documento)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,0 +1,69 @@
+<div class="max-w-7xl mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6">Gestión de Analistas de Crédito</h2>
+  
+    <!-- Formulario para crear/editar analista -->
+    <form (ngSubmit)="guardarAnalista()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      
+      <!-- Campo Nombre -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Nombre:</label>
+        <input [(ngModel)]="analista.nombre" name="nombre" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Campo Correo Electrónico -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Correo Electrónico:</label>
+        <input [(ngModel)]="analista.correoElectronico" name="correoElectronico" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+        <input [(ngModel)]="analista.password" name="password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Rol:</label>
+        <select [(ngModel)]="analista.role" name="estado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option [value]="'ROLE_ANALYST'" [selected]="!analista.role || analista.role === 'ROLE_ANALYST'">ROLE_ANALYST</option>
+        </select>
+      </div>
+      
+  
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          {{ editMode ? 'Actualizar Analista' : 'Crear Analista' }}
+        </button>
+        <button type="button" (click)="resetForm()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla para listar analistas -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="w-1/3 py-2">Nombre</th>
+            <th class="w-1/3 py-2">Correo Electrónico</th>
+            <th class="w-1/3 py-2">Password</th>
+            <th class="w-1/3 py-2">Rol</th>
+            <th class="w-1/3 py-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let analista of analistas" class="bg-gray-100 border-b">
+            <td class="py-2 px-4">{{ analista.nombre }}</td>
+            <td class="py-2 px-4">{{ analista.correoElectronico }}</td>
+            <td class="py-2 px-4">{{ analista.password }}</td>
+            <td class="py-2 px-4">{{ analista.role }}</td>
+            <td class="py-2 px-4 flex space-x-4">
+              <button (click)="cargarAnalista(analista)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,0 +1,71 @@
+<div class="max-w-7xl mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6">Gestión de Transacciones Internas</h2>
+  
+    <!-- Formulario para crear/editar transacción -->
+    <form (ngSubmit)="guardarTransaccion()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      
+      <!-- Selector de Usuario -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
+        <select [(ngModel)]="transaccion.usuario.idUsuario" name="idUsuario" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option *ngFor="let usuario of usuarios" [value]="usuario.idUsuario">{{ usuario.nombre }}</option>
+        </select>
+      </div>
+  
+      <!-- Campo Tipo de Transacción -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Tipo de Transacción:</label>
+        <input [(ngModel)]="transaccion.tipoTransaccion" name="tipoTransaccion" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Campo Monto -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Monto:</label>
+        <input [(ngModel)]="transaccion.monto" name="monto" required type="number" step="0.01" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <!-- Campo Fecha de Transacción -->
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Fecha de Transacción:</label>
+        <input [(ngModel)]="transaccion.fechaTransaccion" name="fechaTransaccion" required type="datetime-local" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+      </div>
+  
+      <div class="flex items-center justify-between">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          {{ editMode ? 'Actualizar Transacción' : 'Crear Transacción' }}
+        </button>
+        <button type="button" (click)="resetForm()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  
+    <!-- Tabla para listar transacciones -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="w-1/5 py-2">Usuario</th>
+            <th class="w-1/5 py-2">Tipo de Transacción</th>
+            <th class="w-1/5 py-2">Monto</th>
+            <th class="w-1/5 py-2">Fecha de Transacción</th>
+            <th class="w-1/5 py-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaccion of transacciones" class="bg-gray-100 border-b">
+            <td class="py-2 px-4">{{ transaccion.usuario.nombre }}</td>
+            <td class="py-2 px-4">{{ transaccion.tipoTransaccion }}</td>
+            <td class="py-2 px-4">{{ transaccion.monto }}</td>
+            <td class="py-2 px-4">{{ transaccion.fechaTransaccion }}</td>
+            <td class="py-2 px-4 flex space-x-4">
+              <button (click)="cargarTransaccion(transaccion)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                Editar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
